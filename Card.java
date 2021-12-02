@@ -66,9 +66,8 @@ public class Card extends JToggleButton implements ActionListener {
 		
 	protected void lockCard() {
 		this.isLocked = true;
-		this.setEnabled(false);
-		this.setBorder((Border) new Color(207,181,159));
-		this.setBackground(Color.red);
+		//this.setEnabled(false);
+		//this.setBackground(Color.red);
 	}
 		
 	protected void setBlank() {

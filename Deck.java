@@ -35,31 +35,15 @@ public class Deck extends JPanel implements ActionListener {
 	private Random random;
 	
 	//  Was using this as part of the cardLock / shuffle mechanism that is not implemented
-	private List<Card> cardList = new ArrayList<Card>();
+	private List<Card> cardList;
 	
 	
 	public Deck() {
 		super( new GridLayout(4,13,10,10) );
 		setBackground(hunterGreen);
-		
 		random = new Random(51);
 
-		for (String suit : suits) {
-			int row = 0;
-			for (int value=1; value <= 13; value++) {
-				this.card = new Card(suit,value);
-				this.card.row = row;
-				this.card.column = value;
-				if (this.card.value == 1) { this.card.setBlank(); }
-				this.card.setVisible(true);
-				this.add(card);
-				this.cardList.add(card);	// to work with cardLock()
-			}
-			row ++;
-		}
-		
-		setVisible(true);
-		shuffle();
+		newDeck(false);
 		checkDeck(true);
 	}
 
@@ -91,7 +75,7 @@ public class Deck extends JPanel implements ActionListener {
 			//  Random selection of target
 			
 			target = this.cardList.get(intRandom);
-			targetFace = target.getBackground();
+			//targetFace = target.getBackground();
 		
 			//  The JButton itself stays in the same position, it is the card properties that move around
 			//  Could move this to a card.swap() method
@@ -101,12 +85,36 @@ public class Deck extends JPanel implements ActionListener {
 			cardSelected.setBackground(target.getBackground());
 			
 			target.setSuit(selectedSuit);
-//			target.setValue(selectedValue);
+			target.setValue(selectedValue);
 			target.setText(selectedText);
 			target.setBackground(selectedFace);
 		}
 	}
 
+	
+	public void newDeck(Boolean isReset) {
+		if (isReset) { this.removeAll();}
+		this.cardList = new ArrayList<Card>();
+		for (String suit : suits) {
+			int row = 0;
+			for (int value=1; value <= 13; value++) {
+				this.card = new Card(suit,value);
+				this.card.row = row;
+				this.card.column = value;
+				if (this.card.value == 1) { this.card.setBlank(); }
+				this.card.setVisible(true);
+				this.add(card);
+				this.cardList.add(card);	// to work with cardLock()
+			}
+			row ++;
+		}
+		
+		shuffle();
+		setVisible(true);
+		
+	}
+	
+	
 	
 	// Move to game logic & make self starting app
 	protected boolean checkTwos(Card card) {

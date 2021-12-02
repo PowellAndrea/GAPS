@@ -72,7 +72,8 @@ public class Main {
 	}	
 	
 	private static void clickNew() {
-		deckPanel= new Deck();
+		deckPanel.newDeck(true);
+		mainWindow.pack();
 		
 	}
 	
